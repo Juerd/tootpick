@@ -62,11 +62,15 @@
 		background: white;
 		padding: .5em;
 		width: 100%;
-		background: #aaa;
+		background: #eee;
 		color: #222;
 		max-height: 9em;
 		overflow: auto;
 		cursor: not-allowed;
+	}
+	#message:hover {
+		background: #ccc;
+		color: #888;
 	}
 	#inputline {
 		display: flex;
@@ -153,7 +157,8 @@
 	<div>
 		Pick your Mastodon server to redact and toot:
 	</div>
-	<blockquote id=message title="You can edit the text on the next page, on your own server.">
+	<blockquote id=message
+		title="You can edit the text on the next page, on your own Mastodon server.">
 	</blockquote>
 	<form id=inputline>
 		<label for=instance>Server:</label>
