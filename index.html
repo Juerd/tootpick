@@ -1,4 +1,170 @@
 <!DOCTYPE html>
 <meta charset=UTF-8>
 <title>Tootpick</title>
-Hello, world!
+<meta name=viewport content="width=device-width, initial-scale=1">
+<meta http-equiv=Content-Security-Policy content="default-src 'self' 'unsafe-inline'; connect-src https:">
+<style>
+	* {
+		box-sizing: border-box;
+	}
+	html {
+		height: 100%;
+		padding: 0;
+		margin: 0;
+	}
+	body {
+		padding: 0;
+		margin: 0;
+		display: flex;
+		min-height: 100%;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background: #191b22;
+		line-height: 150%;
+		color: white;
+		font-family: sans-serif;
+		font-size: 15px;
+	}
+	body * {
+		font: inherit;
+		border: 0;
+		border-radius: 4px;
+	}
+	:focus {
+		outline: 1px dashed white;
+		outline-offset: 2px;
+	}
+	::placeholder {
+		font-style: italic;
+		color: #666;
+	}
+	a {
+		color: inherit;
+		text-decoration: underline;
+	}
+	a:hover {
+		filter: brightness(150%);
+	}
+	main {
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
+		background: #444b5d;
+		border-radius: 0;
+		padding: 10px;
+		max-width: 40rem;
+		margin-top: auto;
+		margin-bottom: auto;
+	}
+	#message {
+		margin: 0;
+		background: white;
+		padding: .5em;
+		width: 100%;
+		background: #aaa;
+		color: #222;
+		max-height: 9em;
+		overflow: auto;
+		cursor: not-allowed;
+	}
+	#inputline {
+		display: flex;
+		align-items: center;
+		gap: .5em;
+	}
+	#instance {
+		padding: .2em .5em;
+		flex: 0 1 15em;
+		width: 0;
+	}
+	#instance:focus {
+		outline: 0;
+	}
+	#toot {
+		margin-left: auto;
+		background: #5455ff;
+		color: #fff;
+		padding: 7px 10px;
+		font-weight: 500;
+		font-size: 15px;
+	}
+	#toot:hover {
+		background: #6364ff;
+	}
+	footer {
+		color: #aaa;
+		padding: 1em;
+		text-align: center;
+	}
+	.error {
+		padding: .5em;
+		background: #ff6666;
+		color: black;
+	}
+	.hidden {
+		display: none;
+	}
+</style>
+
+<script>
+	function $(q) {
+		return document.querySelector(q);
+	}
+	function error(msg) {
+		let el = $('#errorline');
+		if (msg && typeof msg == 'string') {
+			el.innerText = msg;
+			el.classList.remove('hidden');
+		} else {
+			el.classList.add('hidden');
+		}
+	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		$("#instance").addEventListener('keydown', error);
+		$("#instance").addEventListener('click', error);
+
+		$("form").addEventListener('submit', (e) => {
+			e.preventDefault();
+			if (! $("#instance").value.match(/[a-z0-9]\.[a-z]{2,}$/)) {
+				error('Enter a valid domain name.');
+				return;
+			}
+		});
+
+		$("#message").innerText = document.location.hash || "Lorem ipsum";
+	});
+</script>
+
+<header class=error>
+	Note: this service is under construction and doesn't do anything useful yet.
+</header>
+
+<main>
+	<noscript>
+		<div class=error>
+		Please enable JavaScript to use this service. This page requires
+		JavaScript to keep all the data in your browser. The alternative would
+		be to send message contents to the server, which would be the worse
+		decision privacy-wise.
+		</div>
+	</noscript>
+	<div>
+		Pick your Mastodon server to redact and toot:
+	</div>
+	<blockquote id=message title="You can edit the text on the next page, on your own server.">
+	</blockquote>
+	<form id=inputline>
+		<label for=instance>Server:</label>
+		<input id=instance placeholder="social.example.org">
+		<input type=submit id=toot value="Continue">
+	</form>
+	<div id=errorline class="error hidden">
+	</div>
+</main>
+<footer>
+	<a href="https://github.com/Juerd/tootpick">Tootpick</a> is a
+	privacy preserving instance picker for sharing links from
+	news sites, blogs, etc.<br>(Free software under the AGPLv3 license.)
+</footer>
