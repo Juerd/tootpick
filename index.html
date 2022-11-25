@@ -77,6 +77,12 @@
 		align-items: center;
 		gap: .5em;
 	}
+	#inputline label {
+		flex: 0 1 20em;
+		display: flex;
+		align-items: center;
+		gap: .5em;
+	}
 	#instance {
 		padding: .2em .5em;
 		flex: 0 1 15em;
@@ -155,14 +161,16 @@
 		</div>
 	</noscript>
 	<div>
-		Pick your Mastodon server to redact and toot:
+		Pick your Mastodon server to toot this message:
 	</div>
 	<blockquote id=message
 		title="You can edit the text on the next page, on your own Mastodon server.">
 	</blockquote>
 	<form id=inputline>
-		<label for=instance>Server:</label>
-		<input id=instance placeholder="social.example.org">
+		<label title="Enter the domain name of your Mastodon server (sometimes called 'instance')">
+			Server:
+			<input id=instance placeholder="social.example.org">
+		</label>
 		<input type=submit id=toot value="Continue">
 	</form>
 	<div id=errorline class="error hidden">
