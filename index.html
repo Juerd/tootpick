@@ -137,10 +137,27 @@
 
 		$("form").addEventListener('submit', (e) => {
 			e.preventDefault();
-			if (! $("#instance").value.match(/[a-z0-9]\.[a-z]{2,}$/)) {
-				error('Enter a valid domain name.');
+
+			// domain is expected, but user might enter URL
+			let instance = $("#instance").value.trim();
+
+			// remove trailing slash and username, if present
+			instance = instance.replace(/\/+(?:@.*)?$/, "");
+
+			// newbies may write https:foo or https//foo too.
+			instance = instance.replace(/^https?\W+/, "");
+
+			// Check whether the input is a valid domain name, in order to
+			// prevent leaking e.g. pasted clipboard text (passwords, credit
+			// card numbers, love letters, ...) via DNS. Can't prevent
+			// every mistake, but let's catch at least the obvious cases.
+			if (! instance.match(/^(?:(?:xn--)?[a-z0-9]+[-.])*[a-z0-9]+\.[a-z]{2,}$/i)) {
+				// TODO: support user readable IDN and %-encoded IDN (both uncommon)
+				error('Not a valid internet domain name.');
 				return;
 			}
+
+			$("#instance").value = instance;
 		});
 
 		$("#message").innerText = document.location.hash || "Create a 'share with Mastodon' link on your website using Tootpick! https://tootpick.org/ #mastodon #tootpick";
