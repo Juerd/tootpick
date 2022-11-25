@@ -8,6 +8,9 @@ Not actually usable yet :)
 
 Tootpick is a privacy-preserving tooter, similar to the one on toot.kytta.dev.
 
+Its purpose is providing an easy link target for a "Mastodon share button",
+similar to other social media share buttons.
+
 ## Using Tootpick
 
 To allow visitors to share a message via Mastodon, provide a link to
@@ -29,6 +32,16 @@ Instead of using the central tootpick.org service, tootpick can also be
 self-hosted by downloading the static HTML file. Tootpick is AGPL licensed, but
 as long as it remains a static HTML page, the requirement of sharing the source
 code of a derivative work is automatically fulfilled.
+
+Self-hosting comes with a privacy trade-off: a self-hosted (modified) copy of
+Tootpick could be used to collect the Mastodon instances used by the visitor,
+but on the other hand hides their IP address from the server that hosts the
+service on tootpick.org.
+
+## Button image
+
+No button image is provided at this point, but the [official Mastodon logo](https://github.com/mastodon/mastodon/tree/main/app/javascript/images)
+is probably a good starting point for designing your own.
 
 ## Why not just link directly to Mastodon?
 
