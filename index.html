@@ -2,7 +2,8 @@
 <meta charset=UTF-8>
 <title>Tootpick</title>
 <meta name=viewport content="width=device-width, initial-scale=1">
-<meta http-equiv=Content-Security-Policy content="default-src 'self' 'unsafe-inline'; connect-src https:">
+<meta http-equiv=Content-Security-Policy content="default-src 'self' 'unsafe-inline' https:; connect-src https:; img-src  https:">
+<meta http-equiv=Referrer-Policy content=no-referrer>
 <style>
 	* {
 		box-sizing: border-box;
@@ -21,6 +22,7 @@
 		justify-content: center;
 		align-items: center;
 		background: #191b22;
+		background-size: cover;
 		line-height: 150%;
 		color: white;
 		font-family: sans-serif;
@@ -118,9 +120,13 @@
 </style>
 
 <script>
+	let message;
+	let notMastodon = 'That does not appear to be a Mastodon server.';
+
 	function $(q) {
 		return document.querySelector(q);
 	}
+
 	function error(msg) {
 		let el = $('#errorline');
 		if (msg && typeof msg == 'string') {
@@ -131,7 +137,39 @@
 		}
 	}
 
+	function setLocationGlobals() {
+		let hash = document.location.hash.replace(/^#/, '');
+		let args = {};
+		for (let arg of hash.split('&')) {
+			let [k, v] = arg.split('=');
+			args[ decodeURIComponent(k) ] = decodeURIComponent(v);
+		}
+		message = args['text'] || "Create a 'share with Mastodon' link on your website using Tootpick! https://tootpick.org/ #mastodon #tootpick";
+
+		$("#message").innerText = message;
+	}
+
+	function toot(domain, message) {
+		fetch(`https://${domain}/api/v1/instance`)
+		.then((resp) => resp.json())
+		.then(function (data) {
+			if (!data['version']) {
+				error(notMastodon);
+				return;
+			}
+			document.body.style.backgroundImage = 'url(' + data['thumbnail'] + ')';
+			setTimeout(() => {
+				document.location = `https://${domain}/share?text=` + encodeURIComponent(message);
+			}, 1000);
+		})
+		.catch((err) => error(notMastodon));
+	}
+
+	window.addEventListener('hashchange', setLocationGlobals);
+
 	document.addEventListener('DOMContentLoaded', () => {
+		setLocationGlobals();
+
 		$("#instance").addEventListener('keydown', error);
 		$("#instance").addEventListener('click', error);
 
@@ -158,9 +196,9 @@
 			}
 
 			$("#instance").value = instance;
-		});
 
-		$("#message").innerText = document.location.hash || "Create a 'share with Mastodon' link on your website using Tootpick! https://tootpick.org/ #mastodon #tootpick";
+			toot(instance, message);
+		});
 	});
 </script>
 
