@@ -1,12 +1,6 @@
-# WORK IN PROGRESS
-
-Not actually usable yet :)
-
-
-
 # Tootpick
 
-Tootpick is a privacy-preserving tooter, similar to the one on toot.kytta.dev.
+Tootpick is a privacy-preserving tooter.
 
 Its purpose is providing an easy link target for a "Mastodon share button",
 similar to other social media share buttons.
@@ -16,7 +10,7 @@ similar to other social media share buttons.
 To allow visitors to share a message via Mastodon, provide a link to
 
 ```
-https://tootpick.org/#text=Visit%20this%20great%20website:%20https://example.org/
+https://tootpick.org/#text=Everyone%20should%20visit%20this%20great%20website:%20https://example.org/
 ```
 
 This will let the visitor pick their Mastodon server and post the message "Your
@@ -24,7 +18,11 @@ text here". When sharing an article or web page, don't forget to include the
 URL as part of the text. The text must be "URI encoded", i.e. spaces must be
 replaced by `%20`, ampersands by `%26`, etcetera, just like is common for URLs.
 It is customary to include several relevant hashtags; use `%23` for the `#`
-sign.
+sign. In JavaScript, this kind of encoding is available as
+`EncodeURIComponent()`.
+
+Most Mastodon servers have a 500 character limit so it's wise to keep your
+message shorter than that. Tootpick does not check the length of the message.
 
 ## Self-hosting
 
@@ -35,7 +33,7 @@ code of a derivative work is automatically fulfilled.
 
 Self-hosting comes with a privacy trade-off: a self-hosted (modified) copy of
 Tootpick could be used to collect the Mastodon instances used by the visitor,
-but on the other hand hides their IP address from the server that hosts the
+but on the other hand hides visitor IP addresses from the server that hosts the
 service on tootpick.org.
 
 ## Button image
@@ -46,10 +44,10 @@ is probably a good starting point for designing your own.
 ## Why not just link directly to Mastodon?
 
 Mastodon is part of the fediverse, a federated network. By design, there is no
-central server or central domain name, so the direct link option does not
-exist. Please don't make the mistake of picking a large server and linking
-directly to its /share URL, because the majority of Mastodon users will not be
-on that server.
+central server or central domain name. That direct link option you might be
+thinking about, does not exist. Please don't make the mistake of picking a
+large server and linking directly to its /share URL, because the majority of
+Mastodon users will not be on that server.
 
 ## Design goals
 
@@ -72,6 +70,12 @@ instance, hiding any possibly sensitive tracking information from the instance
 admins. (It is not possible for Tootpick to prevent sending the Referer to the
 server that hosts Tootpick.)
 
+> Hi, it's me, the author of Tootpick. Because I'm not collecting any data
+> from Tootpick users, I have no idea who uses it. If you're using Tootpick on
+> your website, and want to let me know, please "favorite" the
+> project on GitHub or send me a message on Mastodon (`@whreq@hsnl.social`) -
+> that way I know whether I should keep maintaining it. Thanks!
+
 ### Multiple instances
 
 Most existing instance pickers will provide an option to remember the last used
@@ -88,3 +92,23 @@ old browsers.
 
 It should also be usable by people who use assistive technologies, but that
 comes for free by using normal HTML.
+
+## Similar projects
+
+Tootpick is not the first of its kind. It draws inspiration from:
+
+- [toot](https://codeberg.org/kytta/toot)
+- [Advanced Sharer for Mastodon](https://sharetomastodon.github.io/about/)
+- [Mastodon Share Button](https://aly-ve.github.io/Mastodon-share-button/)
+
+## Future improvements
+
+At some point in the future, I hope to:
+
+- Have an alternative "light mode" for people who don't like dark pages.
+- Detect the visitor's language and show translated texts.
+- Supply a list of existing instances. Not sure if it's useful enough to add
+  extra weight, and not sure how to determine which instances to include or
+  exclude. Please let me know what you think!
+- Test if Tootpick works with some older browsers. Specifically, apparently
+  some people still use IE?!
