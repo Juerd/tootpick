@@ -269,7 +269,23 @@
 
 			setTimeout(() => tootRedirect(domain, message), 1000);
 		})
-		.catch((err) => error(notMastodon));
+		.catch((err) => {
+			// Can't do real webfinger, because that needs an acct: parameter.
+			// But we can at least do an opportunistic attempt to support
+			// *some* (most?) servers where WEB_DOMAIN != LOCAL_DOMAIN.
+			fetch(`https://${domain}/.well-known/webfinger`)
+			.then((resp) => {
+				if (resp.redirected) {
+					let found = resp.url.match(/^https:\/\/([^\/]+)\/\.well-known\/webfinger/);
+					if (found) tryNewInstance(found[1], message);
+					else throw(new Error('Weird webfinger'));
+				} else {
+					throw(new Error('No webfinger'));
+				}
+			})
+			.catch((err) => error(notMastodon));
+		});
+
 	}
 
 	window.addEventListener('hashchange', setLocationGlobals);
