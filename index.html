@@ -215,6 +215,8 @@
 		setRecent(recent);
 
 		// Populate
+		$('#recent').innerHTML = '';
+
 		for (let item of recent) {
 			let div = document.createElement('button');
 			div.dataset['instance'] = JSON.stringify(item);
@@ -270,7 +272,7 @@
 
 	window.addEventListener('hashchange', setLocationGlobals);
 
-	document.addEventListener('DOMContentLoaded', () => {
+	window.addEventListener('pageshow', () => {
 		setLocationGlobals();
 		populateRecent();
 
