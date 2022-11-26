@@ -23,7 +23,7 @@
 		align-items: center;
 		background: #191b22;
 		background-size: cover;
-		line-height: 150%;
+		line-height: 120%;
 		color: white;
 		font-family: sans-serif;
 		font-size: 15px;
@@ -78,31 +78,74 @@
 		display: flex;
 		align-items: center;
 		gap: .5em;
+		flex-wrap: wrap;
 	}
 	#inputline label {
-		flex: 0 1 20em;
+		flex: 0 1 auto;
 		display: flex;
 		align-items: center;
-		gap: .5em;
 	}
-	#instance {
+	#inputline span#server {
+		white-space: nowrap;
+		margin-right: .5em;
+	}
+	input#instance {
 		padding: .2em .5em;
-		flex: 0 1 15em;
+		flex: 0 1 20em;
 		width: 0;
+		min-width: 10em;
 	}
-	#instance:focus {
+	input#instance:focus {
 		outline: 0;
 	}
-	#toot {
-		margin-left: auto;
+	button, input[type="submit"] {
 		background: #5455ff;
 		color: #fff;
 		padding: 7px 10px;
 		font-weight: 500;
 		font-size: 15px;
+		cursor: pointer;
 	}
-	#toot:hover {
+	button:hover, input[type="submit"]:hover {
 		background: #6364ff;
+	}
+	#toot {
+		margin-left: auto;
+	}
+	#recent {
+		display: flex;
+		justify-content: space-around;
+		flex-wrap: wrap;
+		gap: .5em;
+	}
+	#recent > button {
+		flex: 0 1 140px;
+		display: flex;
+		flex-direction: column;
+		gap: .5em;
+		padding-top: .5em;
+		position: relative;
+		margin-top: 1em;
+	}
+	#recent > button img {
+		width: 120px;
+		aspect-ratio: 1200/630;
+		object-fit: cover;
+	}
+	button.delete {
+		background: black;
+		color: #df405a;
+		position: absolute;
+		padding: .2em .3em;
+		top: .2em;
+		right: .2em;
+	}
+	button.delete::after {
+		content: '\002716';  /* HEAVY MULTIPLICATION X */
+	}
+	button.delete:hover {
+		background: #df405a;
+		color: white;
 	}
 	footer {
 		color: #aaa;
@@ -111,11 +154,11 @@
 	}
 	.error {
 		padding: .5em;
-		background: #ff6666;
+		background: #df405a;
 		color: black;
 	}
 	.hidden {
-		display: none;
+		display: none !important;
 	}
 </style>
 
@@ -149,7 +192,59 @@
 		$("#message").innerText = message;
 	}
 
-	function toot(domain, message) {
+	function getRecent() {
+		return JSON.parse(localStorage.getItem('recent') || '[]');
+	}
+
+	function setRecent(obj) {
+		localStorage.setItem('recent', JSON.stringify(obj));
+	}
+
+	function populateRecent(obj) {
+		// Deduplicate
+		let recent = getRecent();
+		let seen = {};
+		recent = recent.filter(x => {
+			let key = x['domain'];
+			return seen[key] ? false : (seen[key] = true);
+		});
+
+		// The box will show 2, 3, or 4 per row, limit of 12 ensures
+		// truncating at a whole row.
+		if (recent.length > 12) recent.length = 12;
+		setRecent(recent);
+
+		// Populate
+		for (let item of recent) {
+			let div = document.createElement('button');
+			div.dataset['instance'] = JSON.stringify(item);
+			let img = document.createElement('img');
+			img.src = item['thumbnail'];
+			let del = document.createElement('button');
+			del.classList.add('delete');
+			del.setAttribute('title', 'Forget ' + item['domain']);
+			let text = document.createElement('div');
+			text.innerText = "Continue with\n" + item['domain'];
+
+			div.setAttribute('title', item['title']);
+			div.appendChild(del);
+			div.appendChild(img);
+			div.appendChild(text);
+			$('#recent').appendChild(div);
+		}
+
+		if (recent.length) {
+			$("span#server").innerText = "New server:";
+		} else {
+			$("#recent").classList.add('hidden');
+		}
+	}
+
+	function tootRedirect(domain, message) {
+		document.location = `https://${domain}/share?text=${ encodeURIComponent(message) }`;
+	}
+
+	function tryNewInstance(domain, message) {
 		fetch(`https://${domain}/api/v1/instance`)
 		.then((resp) => resp.json())
 		.then(function (data) {
@@ -157,10 +252,18 @@
 				error(notMastodon);
 				return;
 			}
-			document.body.style.backgroundImage = 'url(' + data['thumbnail'] + ')';
-			setTimeout(() => {
-				document.location = `https://${domain}/share?text=` + encodeURIComponent(message);
-			}, 1000);
+			let thumbnail = data['thumbnail'];
+			let title = data['title'];
+
+			document.body.style.backgroundImage = `url(${thumbnail})`;
+
+			if ($('#remember').checked) {
+				let recent = getRecent();
+				recent.unshift({ domain, thumbnail, title });
+				setRecent(recent);
+			}
+
+			setTimeout(() => tootRedirect(domain, message), 1000);
 		})
 		.catch((err) => error(notMastodon));
 	}
@@ -169,6 +272,7 @@
 
 	document.addEventListener('DOMContentLoaded', () => {
 		setLocationGlobals();
+		populateRecent();
 
 		$("#instance").addEventListener('keydown', error);
 		$("#instance").addEventListener('click', error);
@@ -197,7 +301,32 @@
 
 			$("#instance").value = instance;
 
-			toot(instance, message);
+			tryNewInstance(instance, message);
+		});
+
+		$("#recent").addEventListener('click', (event) => {
+			let button = event.target.closest('button');
+			if (!button) return;
+
+
+			if (button.classList.contains('delete')) {
+				let instance = JSON.parse( button.parentElement.dataset['instance'] );
+
+				setRecent(getRecent().filter(
+					x => x['domain'] != instance['domain']
+				));
+
+				button.parentElement.remove();
+			} else {
+				let instance = JSON.parse( button.dataset['instance'] );
+				document.body.style.backgroundImage = `url(${ instance['thumbnail'] })`;
+
+				let recent = getRecent();
+				recent.unshift(instance);
+				setRecent(recent);
+
+				tootRedirect(instance['domain'], message);
+			}
 		});
 	});
 </script>
@@ -223,12 +352,17 @@
 	</blockquote>
 	<form id=inputline>
 		<label title="Enter the domain name of your Mastodon server (sometimes called 'instance')">
-			Server:
+			<span id=server>Server:</span>
 			<input id=instance placeholder="social.example.org">
+		</label>
+		<label>
+			<input type=checkbox id=remember checked> Remember
 		</label>
 		<input type=submit id=toot value="Continue">
 	</form>
 	<div id=errorline class="error hidden">
+	</div>
+	<div id=recent>
 	</div>
 </main>
 <footer>
