@@ -289,7 +289,8 @@
 		.catch((err) => {
 			// Can't do real webfinger, because that needs an acct: parameter.
 			// But we can at least do an opportunistic attempt to support
-			// *some* (most?) servers where WEB_DOMAIN != LOCAL_DOMAIN.
+			// *some* servers where WEB_DOMAIN != LOCAL_DOMAIN. This only
+			// works if the redirect and the target both allow CORS.
 			fetch(`https://${domain}/.well-known/webfinger`)
 			.then((resp) => {
 				if (resp.redirected) {
