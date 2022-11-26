@@ -311,6 +311,7 @@
 	window.addEventListener('pageshow', () => {
 		setLocationGlobals();
 		populateRecent();
+		clearStatus();
 
 		$("#instance").addEventListener('keydown', clearStatus);
 		$("#instance").addEventListener('click', clearStatus);
