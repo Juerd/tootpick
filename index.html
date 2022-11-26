@@ -269,7 +269,7 @@
 		fetch(`https://${domain}/api/v1/instance`)
 		.then((resp) => resp.json())
 		.then(function (data) {
-			if (!data['version']) {
+			if (!data['version'] || data['version'].match(/compatible/i)) {
 				error(notMastodon);
 				return;
 			}
