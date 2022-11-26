@@ -197,14 +197,9 @@
 	}
 
 	function setRecent(obj) {
-		localStorage.setItem('recent', JSON.stringify(obj));
-	}
-
-	function populateRecent(obj) {
 		// Deduplicate
-		let recent = getRecent();
 		let seen = {};
-		recent = recent.filter(x => {
+		obj = obj.filter(x => {
 			let key = x['domain'];
 			return seen[key] ? false : (seen[key] = true);
 		});
@@ -212,12 +207,21 @@
 		// The box will show 2, 3, or 4 per row, limit of 12 ensures
 		// truncating at a whole row.
 		if (recent.length > 12) recent.length = 12;
-		setRecent(recent);
 
-		// Populate
+		localStorage.setItem('recent', JSON.stringify(obj));
+	}
+
+	function populateRecent() {
+		let recent = getRecent();
+
+		if (!recent.length) {
+			$("#recent").classList.add('hidden');
+			return;
+		}
+
 		$('#recent').innerHTML = '';
 
-		for (let item of recent) {
+		for (let item of getRecent()) {
 			let div = document.createElement('button');
 			div.dataset['instance'] = JSON.stringify(item);
 			let img = document.createElement('img');
@@ -233,12 +237,6 @@
 			div.appendChild(img);
 			div.appendChild(text);
 			$('#recent').appendChild(div);
-		}
-
-		if (recent.length) {
-			$("span#server").innerText = "New server:";
-		} else {
-			$("#recent").classList.add('hidden');
 		}
 	}
 
