@@ -16,7 +16,7 @@ similar to other social media share buttons.
 To allow visitors to share a message via Mastodon, provide a link to
 
 ```
-https://tootpick.org/#text=Your%20text%20here
+https://tootpick.org/#text=Visit%20this%20great%20website:%20https://example.org/
 ```
 
 This will let the visitor pick their Mastodon server and post the message "Your
