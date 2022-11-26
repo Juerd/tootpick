@@ -328,7 +328,7 @@
 			let instance = $("#instance").value.trim();
 
 			if (instance == '') {
-				error('Enter the domain name of your Mastodon server.');
+				error($("#instance").closest("label").getAttribute("title"));
 				return;
 			}
 
