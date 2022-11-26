@@ -317,6 +317,10 @@
 		$("#instance").addEventListener('keydown', clearStatus);
 		$("#instance").addEventListener('click', clearStatus);
 
+		$("#message").addEventListener('click', () => {
+			status($("#message").getAttribute('title'))
+		});
+
 		$("form").addEventListener('submit', (e) => {
 			e.preventDefault();
 
