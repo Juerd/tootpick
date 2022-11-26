@@ -225,7 +225,7 @@
 
 		// The box will show 2, 3, or 4 per row, limit of 12 ensures
 		// truncating at a whole row.
-		if (recent.length > 12) recent.length = 12;
+		if (obj.length > 12) obj.length = 12;
 
 		localStorage.setItem('recent', JSON.stringify(obj));
 	}
