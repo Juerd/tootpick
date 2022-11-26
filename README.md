@@ -13,13 +13,13 @@ To allow visitors to share a message via Mastodon, provide a link to
 https://tootpick.org/#text=Everyone%20should%20visit%20https://example.org/
 ```
 
-This will let the visitor pick their Mastodon server and post the message "Your
-text here". When sharing an article or web page, don't forget to include the
-URL as part of the text. The text must be "URI encoded", i.e. spaces must be
-replaced by `%20`, ampersands by `%26`, etcetera, just like is common for URLs.
-It is customary to include several relevant hashtags; use `%23` for the `#`
-sign. In JavaScript, this kind of encoding is available as
-`EncodeURIComponent()`.
+This will let the visitor pick their Mastodon server and post the message
+"Everyone should visit https://example.org/". When sharing an article or web
+page, don't forget to include the URL as part of the text. The text must be
+"URI encoded", i.e. spaces must be replaced by `%20`, ampersands by `%26`,
+etcetera, just like is common for URLs. It is customary to include several
+relevant hashtags; use `%23` for the `#` sign. In JavaScript, this kind of
+encoding is available as `EncodeURIComponent()`.
 
 Most Mastodon servers have a 500 character limit so it's wise to keep your
 message shorter than that. Tootpick does not check the length of the message.
