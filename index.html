@@ -156,8 +156,12 @@
 		padding: 1em;
 		text-align: center;
 	}
-	.error {
+	#statusline {
 		padding: .5em;
+		background: #9baec8;
+		color: black;
+	}
+	#statusline.error {
 		background: #df405a;
 		color: black;
 	}
@@ -175,13 +179,24 @@
 	}
 
 	function error(msg) {
-		let el = $('#errorline');
-		if (msg && typeof msg == 'string') {
-			el.innerText = msg;
-			el.classList.remove('hidden');
-		} else {
-			el.classList.add('hidden');
-		}
+		let el = $('#statusline');
+		el.innerText = msg;
+		el.classList.add('error');
+		el.classList.remove('hidden');
+	}
+
+	function clearStatus() {
+		let el = $('#statusline');
+		el.classList.add('hidden');
+		el.classList.remove('error');
+		el.innerText = '';
+	}
+
+	function status(msg) {
+		let el = $('#statusline');
+		el.innerText = msg;
+		el.classList.remove('error');
+		el.classList.remove('hidden');
 	}
 
 	function setLocationGlobals() {
@@ -249,6 +264,8 @@
 	}
 
 	function tryNewInstance(domain, message) {
+		status(`Connecting to ${domain}...`);
+
 		fetch(`https://${domain}/api/v1/instance`)
 		.then((resp) => resp.json())
 		.then(function (data) {
@@ -294,8 +311,8 @@
 		setLocationGlobals();
 		populateRecent();
 
-		$("#instance").addEventListener('keydown', error);
-		$("#instance").addEventListener('click', error);
+		$("#instance").addEventListener('keydown', clearStatus);
+		$("#instance").addEventListener('click', clearStatus);
 
 		$("form").addEventListener('submit', (e) => {
 			e.preventDefault();
@@ -385,7 +402,7 @@
 		</label>
 		<input type=submit id=toot value="Continue">
 	</form>
-	<div id=errorline class="error hidden">
+	<div id=statusline class="hidden">
 	</div>
 	<div id=recent>
 	</div>
