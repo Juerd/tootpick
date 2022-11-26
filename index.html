@@ -314,6 +314,10 @@
 			// newbies may write https:foo or https//foo too.
 			instance = instance.replace(/^https?\W+/, "");
 
+			// Deal with user@host and @user@host, and for really advanced
+			// newbies, acct:user@host because why not :)
+			instance = instance.replace(/^(?:acct:)?@?[^@]+@/, "");
+
 			// Check whether the input is a valid domain name, in order to
 			// prevent leaking e.g. pasted clipboard text (passwords, credit
 			// card numbers, love letters, ...) via DNS. Can't prevent
