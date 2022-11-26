@@ -35,7 +35,7 @@
 		border-radius: 4px;
 	}
 	:focus {
-		outline: 1px dashed white;
+		outline: 1px dashed #eee;
 		outline-offset: 2px;
 	}
 	::placeholder {
@@ -108,6 +108,9 @@
 	}
 	button:hover, input[type="submit"]:hover {
 		background: #6364ff;
+	}
+	button:focus, input[type="submit"]:focus {
+		outline-offset: -5px;
 	}
 	#toot {
 		margin-left: auto;
