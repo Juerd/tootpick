@@ -72,9 +72,9 @@ server that hosts Tootpick.)
 
 > Hi, it's me, the author of Tootpick. Because I'm not collecting any data
 > from Tootpick users, I have no idea who uses it. If you're using Tootpick on
-> your website, and want to let me know, please "favorite" the
-> project on GitHub or send me a message on Mastodon (`@whreq@hsnl.social`) -
-> that way I know whether I should keep maintaining it. Thanks!
+> your website, and want to let me know, please "star" the project on GitHub or
+> send me a message on Mastodon (`@whreq@hsnl.social`) - that way I know
+> whether I should keep maintaining it. Thanks!
 
 ### Multiple instances
 
