@@ -81,9 +81,10 @@ used instances.
 
 ### Browser support
 
-If it works for 99.9% of all internet users, and 98% get the site with the
-intended aesthetics, that's good enough. Tootpick does not support ancient
-browsers, and may look ugly on old browsers.
+If the main feature works for 99.9% of all internet users, and 98% get the site
+with the intended aesthetics, that's good enough. Tootpick does not support
+ancient browsers, and may look ugly and have degraded feature availability on
+old browsers.
 
 It should also be usable by people who use assistive technologies, but that
 comes for free by using normal HTML.
