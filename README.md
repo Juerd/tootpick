@@ -85,13 +85,21 @@ used instances.
 
 ### Browser support
 
-If the main feature works for 99.9% of all internet users, and 98% get the site
+If the main feature works for 99% of all internet users, and 98% get the site
 with the intended aesthetics, that's good enough. Tootpick does not support
-ancient browsers, and may look ugly and have degraded feature availability on
-old browsers.
+ancient browsers like IE, and may look ugly and have degraded feature
+availability on old browsers. (The percentages are completely made up and just
+for illustrating the point.)
 
 It should also be usable by people who use assistive technologies, but that
 comes for free by using normal HTML.
+
+### Fix PEBCAKs
+
+Real people make mistakes, and some common mistakes can be recognised and fixed
+by the script. A user may provide the wrong domain, a URL instead of the bare
+domain name, an account, or the account domain instead of the web domain, and
+Tootpick tries to recover from that and do the right thing.
 
 ## Similar projects
 
@@ -110,5 +118,3 @@ At some point in the future, I hope to:
 - Supply a list of existing instances. Not sure if it's useful enough to add
   extra weight, and not sure how to determine which instances to include or
   exclude. Please let me know what you think!
-- Test if Tootpick works with some older browsers. Specifically, apparently
-  some people still use IE?!
