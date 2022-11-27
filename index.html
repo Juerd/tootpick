@@ -246,6 +246,7 @@
 			div.dataset['instance'] = JSON.stringify(item);
 			let img = document.createElement('img');
 			img.src = item['thumbnail'];
+			img.setAttribute('alt', '');  // intentional empty string
 			let del = document.createElement('button');
 			del.classList.add('delete');
 			del.setAttribute('title', 'Forget ' + item['domain']);
