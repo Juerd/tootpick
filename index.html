@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <meta charset=UTF-8>
 <title>Tootpick</title>
+
+<!--
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+-->
+
 <meta name=viewport content="width=device-width, initial-scale=1">
 <meta name=referrer content=no-referrer>
 <meta http-equiv=Content-Security-Policy content="default-src 'self' 'unsafe-inline' https:; connect-src https:; img-src  https:">
@@ -30,7 +43,7 @@
 		font-family: sans-serif;
 		font-size: 15px;
 	}
-	body * {
+	form * {
 		font: inherit;
 		border: 0;
 		border-radius: 4px;
@@ -43,9 +56,10 @@
 		font-style: italic;
 		color: #666;
 	}
-	a {
+	a, summary {
 		color: inherit;
 		text-decoration: underline;
+		cursor: pointer;
 	}
 	a:hover {
 		filter: brightness(150%);
@@ -168,6 +182,20 @@
 	}
 	.hidden {
 		display: none !important;
+	}
+	footer details:not([open]) {
+		display: inline-block;
+	}
+	footer summary {
+		display: inline-block;
+	}
+	footer details[open] {
+		border: 1px solid #aaa;
+		padding: .5em;
+		max-width: 40em;
+	}
+	h4 {
+		margin: .5em;
 	}
 </style>
 
@@ -385,7 +413,7 @@
 	});
 </script>
 
-<main>
+<main data-nosnippet>
 	<noscript>
 		<div class=error>
 		Please enable JavaScript to use this service. This page requires
@@ -418,5 +446,26 @@
 <footer>
 	<a href="https://github.com/Juerd/tootpick">Tootpick</a> is a
 	privacy-preserving instance picker for sharing links from
-	news sites, blogs, etc.<br>(Free software under the AGPLv3 license.)
+	news sites, blogs, etc.<br>
+	Free software under the AGPLv3 license &bull;
+	<details data-nosnippet>
+		<summary>Legal notices</summary>
+		<h4>License</h4>
+		This program is free software: you can redistribute it and/or modify it
+		under the terms of the <a href="https://www.gnu.org/licenses/agpl-3.0.html">
+		GNU Affero General Public License</a> as published by the Free Software
+		Foundation, either version 3 of the License, or (at your option) any
+		later version.
+		<h4>Disclaimer</h4>
+		This program is distributed in the hope that it will be useful,
+		but WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+		GNU Affero General Public License for more details.
+		<h4>Privacy poliy</h4>
+		Tootpick does not collect or store any of your data except on your own
+		computer. The server that hosts Tootpick, and the Mastodon servers you
+		enter, will probably store your IP address and User-Agent (browser)
+		identification in a log file.
+	</details>
 </footer>
+
