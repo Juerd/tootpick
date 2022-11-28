@@ -364,12 +364,11 @@ GNU Affero General Public License for more details.
 	window.addEventListener('hashchange', setLocationGlobals);
 
 	window.addEventListener('pageshow', () => {
+		while (timers.length) clearTimeout(timers.shift());
 		resetStyle();
 		setLocationGlobals();
 		populateRecent();
 		clearStatus();
-		for (let timer of timers) clearTimeout(timer);
-		timers = [];
 	});
 
 	window.addEventListener('DOMContentLoaded', () => {
