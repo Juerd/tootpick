@@ -203,6 +203,7 @@ GNU Affero General Public License for more details.
 <script>
 	let message;
 	let notMastodon = 'That does not appear to be a Mastodon server.';
+	let timers = [];
 
 	function $(q) {
 		return document.querySelector(q);
@@ -312,15 +313,26 @@ GNU Affero General Public License for more details.
 			let thumbnail = data['thumbnail'];
 			let title = data['title'];
 
-			document.body.style.backgroundImage = `url(${thumbnail})`;
-
 			if ($('#remember').checked) {
 				let recent = getRecent();
 				recent.unshift({ domain, thumbnail, title });
 				setRecent(recent);
 			}
 
-			setTimeout(() => tootRedirect(domain, message), 1000);
+			let redirect = () => tootRedirect(domain, message);
+			// backgroundImage doesn't trigger events; dummy image will load
+			// while background is also loaded, browser uses single connection
+			// for both.
+			let dummy = new Image();
+			dummy.addEventListener('error', redirect);  // no point in waiting
+			dummy.addEventListener('load', () => {
+				timers.push(setTimeout(redirect, 1000));
+				// backgroundImage not set here but loading in parallel,
+				// so visitor can see loading happening
+			});
+			dummy.src = thumbnail;
+			document.body.style.backgroundImage = `url(${thumbnail})`;
+			timers.push(setTimeout(redirect, 3500));  // fallback;
 		})
 		.catch((err) => {
 			// Can't do real webfinger, because that needs an acct: parameter.
@@ -349,6 +361,8 @@ GNU Affero General Public License for more details.
 		setLocationGlobals();
 		populateRecent();
 		clearStatus();
+		for (let timer of timers) clearTimeout(timer);
+		timers = [];
 
 		$("#instance").addEventListener('keydown', clearStatus);
 		$("#instance").addEventListener('click', clearStatus);
