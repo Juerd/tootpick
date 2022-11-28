@@ -246,7 +246,8 @@ GNU Affero General Public License for more details.
 	}
 
 	function getRecent() {
-		return JSON.parse(localStorage.getItem('recent') || '[]');
+		try { return JSON.parse(localStorage.getItem('recent')); }
+		catch (e) { return []; }
 	}
 
 	function setRecent(obj) {
