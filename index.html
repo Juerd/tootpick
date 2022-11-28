@@ -207,6 +207,10 @@ GNU Affero General Public License for more details.
 		return document.querySelector(q);
 	}
 
+	function resetStyle() {
+		document.body.style.backgroundImage = 'none';
+	}
+
 	function error(msg) {
 		let el = $('#statusline');
 		el.innerText = msg;
@@ -339,6 +343,7 @@ GNU Affero General Public License for more details.
 	window.addEventListener('hashchange', setLocationGlobals);
 
 	window.addEventListener('pageshow', () => {
+		resetStyle();
 		setLocationGlobals();
 		populateRecent();
 		clearStatus();
