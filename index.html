@@ -74,6 +74,11 @@ GNU Affero General Public License for more details.
 		max-width: 40rem;
 		margin-top: auto;
 		margin-bottom: auto;
+		transition: opacity 1s; /* same as JS timeout */
+		opacity: 1;
+	}
+	.transparent {
+		opacity: 0;
 	}
 	#message {
 		margin: 0;
@@ -211,6 +216,7 @@ GNU Affero General Public License for more details.
 
 	function resetStyle() {
 		document.body.style.backgroundImage = 'none';
+		$('main').classList.remove('transparent');
 	}
 
 	function error(msg) {
@@ -327,6 +333,7 @@ GNU Affero General Public License for more details.
 			dummy.addEventListener('error', redirect);  // no point in waiting
 			dummy.addEventListener('load', () => {
 				timers.push(setTimeout(redirect, 1000));
+				$("main").classList.add('transparent');
 				// backgroundImage not set here but loading in parallel,
 				// so visitor can see loading happening
 			});
@@ -433,7 +440,8 @@ GNU Affero General Public License for more details.
 				recent.unshift(instance);
 				setRecent(recent);
 
-				tootRedirect(instance['domain'], message);
+				$("main").classList.add('transparent');
+				timers.push(setTimeout(() => tootRedirect(instance['domain'], message), 1000));
 			}
 		});
 	});
