@@ -378,11 +378,16 @@ GNU Affero General Public License for more details.
 			// newbies, acct:user@host because why not :)
 			instance = instance.replace(/^(?:acct:)?@?[^@]+@/, "");
 
+			// Some advanced users may enter an FQDN with a trailing dot, but
+			// that needs to be normalized because the domain is used as a
+			// lookup key. Speaking of normalization, let's lowercase.
+			instance = instance.replace(/\.$/, "").toLowerCase();
+
 			// Check whether the input is a valid domain name, in order to
 			// prevent leaking e.g. pasted clipboard text (passwords, credit
 			// card numbers, love letters, ...) via DNS. Can't prevent
 			// every mistake, but let's catch at least the obvious cases.
-			if (! instance.match(/^(?:(?:xn--)?[a-z0-9]+[-.])*[a-z0-9]+\.[a-z]{2,}$/i)) {
+			if (! instance.match(/^(?:(?:xn--)?[a-z0-9]+[-.])*[a-z0-9]+\.[a-z]{2,}$/)) {
 				// TODO: support user readable IDN and %-encoded IDN (both uncommon)
 				error('Not a valid internet domain name.');
 				return;
