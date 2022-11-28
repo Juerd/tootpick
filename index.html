@@ -370,7 +370,9 @@ GNU Affero General Public License for more details.
 		clearStatus();
 		for (let timer of timers) clearTimeout(timer);
 		timers = [];
+	});
 
+	window.addEventListener('DOMContentLoaded', () => {
 		$("#instance").addEventListener('keydown', clearStatus);
 		$("#instance").addEventListener('click', clearStatus);
 
