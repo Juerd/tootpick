@@ -103,20 +103,32 @@ Tootpick tries to recover from that and do the right thing.
 
 ## Fragment parameters
 
+Although Tootpick currently only uses a single parameter, `text`, it is ready
+for accepting more than that.
+
 The parsing of the URI fragment, that is part after the `#`, is done as
-described in the [Media Fragments URI specification](https://www.w3.org/TR/media-frags/#processing-name-value-components).
-This provides broad compatibility with existing RFC 3986 compatible URI
-encoding routines. (Note: Tootpick does not use media fragments, just the
-syntax for parameters in URI fragments.)
+described in the [Media Fragments URI
+specification](https://www.w3.org/TR/media-frags/#processing-name-value-components)
+which assumes RFC 3986 URI escaping. (Note: Tootpick does not use media
+fragments, just the syntax for parameters in URI fragments.)
 
 This means that the reserved characters `&` and `=` are used as delimiters.
 They must be unescaped when used as delimiters, and must be escaped when used
-as a key or value. Additionally, `+`, while "reserved", is not treated as a
-special character, which means that a space must be encoded as `%20`, not `+`.
-RFC 3986 URI encoding functions always encode spaces as `%20`.
+in a key or value. The fragment must not be encoded as a whole, because that
+would encode the delimiters as well; only its part should be individually
+encoded. Additionally, `+`, while "reserved", is not treated as a special
+character, which means that a space must be encoded as `%20`, not `+` like in RFC . RFC 3986
+URI encoding functions always encode spaces as `%20`.
 
 Most programming languages come with a function that does the right thing
 for use with Tootpick.
+
+```JavaScript
+// JavaScript example
+document.location = 'https://tootpick.org/#text=' + encodeURIComponent(
+  document.title + ' ' + document.URL
+);
+```
 
 | Language   | Function                             |
 | ---------- | ------------------------------------ |
