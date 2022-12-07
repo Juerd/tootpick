@@ -117,7 +117,7 @@ They must be unescaped when used as delimiters, and must be escaped when used
 in a key or value. The fragment must not be encoded as a whole, because that
 would encode the delimiters as well; only its part should be individually
 encoded. Additionally, `+`, while "reserved", is not treated as a special
-character, which means that a space must be encoded as `%20`, not `+` like in RFC . RFC 3986
+character, which means that a space must be encoded as `%20`, not `+`. RFC 3986
 URI encoding functions always encode spaces as `%20`.
 
 Most programming languages come with a function that does the right thing
