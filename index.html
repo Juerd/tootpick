@@ -244,7 +244,9 @@ GNU Affero General Public License for more details.
 		let hash = document.location.hash.replace(/^#/, '');
 		let args = {};
 		for (let arg of hash.split('&')) {
-			let [k, v] = arg.split('=');
+			let i = arg.indexOf('=');  // .split() can't preserve a second "="
+			let k = arg.substr(0, i);
+			let v = arg.substr(i + 1);
 			args[ decodeURIComponent(k) ] = decodeURIComponent(v);
 		}
 		message = args['text'] || "If you want a 'share with Mastodon' link on your website, have a look at Tootpick. https://tootpick.org/ #mastodon #tootpick";
