@@ -247,7 +247,8 @@ GNU Affero General Public License for more details.
 			let i = arg.indexOf('=');  // .split() can't preserve a second "="
 			let k = arg.substr(0, i);
 			let v = arg.substr(i + 1);
-			args[ decodeURIComponent(k) ] = decodeURIComponent(v);
+			try { args[ decodeURIComponent(k) ] = decodeURIComponent(v); }
+			catch (e) { }  // ignore URIError
 		}
 		message = args['text'] || "If you want a 'share with Mastodon' link on your website, have a look at Tootpick. https://tootpick.org/ #mastodon #tootpick";
 
