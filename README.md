@@ -18,8 +18,8 @@ This will let the visitor pick their Mastodon server and post the message
 page, don't forget to include the URL as part of the text. The text must be
 "URI encoded", i.e. spaces must be replaced by `%20`, ampersands by `%26`,
 etcetera, just like is common for URLs. It is customary to include several
-relevant hashtags; use `%23` for the `#` sign. In JavaScript, this kind of
-encoding is available as `EncodeURIComponent()`.
+relevant hashtags; use `%23` for the `#` sign. For details, see "Fragment
+parameters" below.
 
 Most Mastodon servers have a 500 character limit so it's wise to keep your
 message shorter than that. Tootpick does not check the length of the message.
@@ -59,7 +59,7 @@ the hosted tootpick.org, or by self-hosting the single HTML file.
 
 ### Privacy
 
-Tootpick abuses the "hash" or "fragment" part of the URL, which is not sent to
+Tootpick uses the "hash" or "fragment" part of the URL, which is not sent to
 the HTTP server, for passing the message. Javascript is used to parse the URL
 and pass the data onto the chosen Mastodon instance. Only the instance server
 will actually receive the contents of the message to be posted.
@@ -100,6 +100,39 @@ Real people make mistakes, and some common mistakes can be recognised and fixed
 by the script. A user may provide the wrong domain, a URL instead of the bare
 domain name, an account, or the account domain instead of the web domain, and
 Tootpick tries to recover from that and do the right thing.
+
+## Fragment parameters
+
+The parsing of the URI fragment, that is part after the `#`, is done as
+described in the [Media Fragments URI specification
+](https://www.w3.org/TR/media-frags/#processing-name-value-components).
+This provides broad compatibility with existing RFC 3986 compatible URI
+encoding routines. (Note: Tootpick does not use media fragments, just the
+syntax for parameters in URI fragments.)
+
+This means that `&` and `=` are treated as reserved characters. They must be
+unescaped when used as delimiters, and must be escaped when used as a key
+or value. Additionally, `+`, while "reserved", is not treated as a special
+character, which means that a space must be encoded as `%20`, not `+`. RFC 3986
+URI encoding functions always encode spaces as `%20`.
+
+Most programming languages come with a function that does the right thing
+for use with Tootpick.
+
+| Language   | Function                             |
+| ---------- | ------------------------------------ |
+| Go         | url.PathEscape() from net/url        |
+| JavaScript | EncodeURIComponent()                 |
+| PHP        | rawurlencode()                       |
+| Perl       | uri\_escape\_utf8() from URI::Escape |
+| Python     | quote() from urllib.parse            |
+| Raku       | uri-escape() from URI::Escape        |
+| Ruby       | url\_encode() from ERB::Util         |
+
+Notably, Java's `java.net.URLEncoder` is useless for path and fragment
+components, because it encodes space as `+` signs. There are several
+alternatives, but which one to use depends on your specific project's needs.
+For Android programs, use `Uri.encode()`.
 
 ## Similar projects
 
