@@ -5,6 +5,8 @@ Tootpick is a privacy-preserving tooter.
 Its purpose is providing an easy link target for a "Mastodon share button",
 similar to other social media share buttons.
 
+[![](https://raw.githubusercontent.com/mastodon/mastodon/main/app/javascript/images/app-icon.svg)](https://tootpick.org/#text=TEST) ← demo!
+
 ## Using Tootpick
 
 To allow visitors to share a message via Mastodon, provide a link to
