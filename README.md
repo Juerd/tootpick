@@ -5,7 +5,7 @@ Tootpick is a privacy-preserving tooter.
 Its purpose is providing an easy link target for a "Mastodon share button",
 similar to other social media share buttons.
 
-[<img src="https://raw.githubusercontent.com/mastodon/mastodon/main/app/javascript/images/app-icon.svg" width=24 align=middle> Share on Mastodon](https://tootpick.org/#text=%23tootpick%20is%20a%20privacy-preserving%20Mastodon%20share%20button%20link%20target%0A%0Ahttps://github.com/Juerd/tootpick) ← demo!
+[<img src="https://raw.githubusercontent.com/mastodon/mastodon/main/app/javascript/images/app-icon.svg" width=16 align=middle> Share on Mastodon](https://tootpick.org/#text=%23tootpick%20is%20a%20privacy-preserving%20Mastodon%20share%20button%20link%20target%0A%0Ahttps://github.com/Juerd/tootpick) ← demo!
 
 ## Using Tootpick
 
@@ -108,11 +108,13 @@ Tootpick tries to recover from that and do the right thing.
 Although Tootpick currently only uses a single parameter, `text`, it is ready
 for accepting more than that.
 
+<details><summary>
 The parsing of the URI fragment, that is part after the `#`, is done as
 described in the [Media Fragments URI
 specification](https://www.w3.org/TR/media-frags/#processing-name-value-components)
 which assumes RFC 3986 URI escaping. (Note: Tootpick does not use media
 fragments, just the syntax for parameters in URI fragments.)
+</summary>
 
 This means that the reserved characters `&` and `=` are used as delimiters.
 They must be unescaped when used as delimiters, and must be escaped when used
@@ -146,6 +148,7 @@ Notably, Java's `java.net.URLEncoder` is useless for path and fragment
 components, because it encodes space as `+` signs. There are several
 alternatives, but which one to use depends on your specific project's needs.
 For Android programs, use `Uri.encode()`.
+</details>
 
 ## Similar projects
 
