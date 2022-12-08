@@ -103,18 +103,18 @@ by the script. A user may provide the wrong domain, a URL instead of the bare
 domain name, an account, or the account domain instead of the web domain, and
 Tootpick tries to recover from that and do the right thing.
 
+<details><summary>
 ## Fragment parameters
+</summary>
 
 Although Tootpick currently only uses a single parameter, `text`, it is ready
 for accepting more than that.
 
-<details><summary>
 The parsing of the URI fragment, that is part after the `#`, is done as
 described in the [Media Fragments URI
 specification](https://www.w3.org/TR/media-frags/#processing-name-value-components)
 which assumes RFC 3986 URI escaping. (Note: Tootpick does not use media
 fragments, just the syntax for parameters in URI fragments.)
-</summary>
 
 This means that the reserved characters `&` and `=` are used as delimiters.
 They must be unescaped when used as delimiters, and must be escaped when used
