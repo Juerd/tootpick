@@ -26,31 +26,6 @@ parameters" below.
 Most Mastodon servers have a 500 character limit so it's wise to keep your
 message shorter than that. Tootpick does not check the length of the message.
 
-## Self-hosting
-
-Instead of using the central tootpick.org service, tootpick can also be
-self-hosted by downloading the static HTML file. Tootpick is AGPL licensed, but
-as long as it remains a static HTML page, the requirement of sharing the source
-code of a derivative work is automatically fulfilled.
-
-Self-hosting comes with a privacy trade-off: a self-hosted (modified) copy of
-Tootpick could be used to collect the Mastodon instances used by the visitor,
-but on the other hand hides visitor IP addresses from the server that hosts the
-service on tootpick.org.
-
-## Button image
-
-No button image is provided at this point, but the [official Mastodon logo](https://github.com/mastodon/mastodon/tree/main/app/javascript/images)
-is probably a good starting point for designing your own.
-
-## Why not just link directly to Mastodon?
-
-Mastodon is part of the fediverse, a federated network. By design, there is no
-central server or central domain name. That direct link option you might be
-thinking about, does not exist. Please don't make the mistake of picking a
-large server and linking directly to its /share URL, because the majority of
-Mastodon users will not be on that server.
-
 ## Design goals
 
 ### Nothing fancy
@@ -103,6 +78,39 @@ by the script. A user may provide the wrong domain, a URL instead of the bare
 domain name, an account, or the account domain instead of the web domain, and
 Tootpick tries to recover from that and do the right thing.
 
+<details><summary>
+
+## Why not just link directly to Mastodon?
+
+Mastodon is part of the fediverse, a federated network. By design, there is no
+central server or central domain name. That direct link option you might be
+thinking about, does not exist. Please don't make the mistake of picking a
+large server and linking directly to its /share URL, because the majority of
+Mastodon users will not be on that server.
+</details>
+<details><summary>
+
+## Self-hosting
+
+</summary>
+Instead of using the central tootpick.org service, tootpick can also be
+self-hosted by downloading the static HTML file. Tootpick is AGPL licensed, but
+as long as it remains a static HTML page, the requirement of sharing the source
+code of a derivative work is automatically fulfilled.
+
+Self-hosting comes with a privacy trade-off: a self-hosted (modified) copy of
+Tootpick could be used to collect the Mastodon instances used by the visitor,
+but on the other hand hides visitor IP addresses from the server that hosts the
+service on tootpick.org.
+</details>
+<details><summary>
+
+## Button image
+
+</summary>
+No button image is provided at this point, but the [official Mastodon logo](https://github.com/mastodon/mastodon/tree/main/app/javascript/images)
+is probably a good starting point for designing your own.
+</details>
 <details><summary>
 
 ## Fragment parameters
