@@ -104,7 +104,9 @@ domain name, an account, or the account domain instead of the web domain, and
 Tootpick tries to recover from that and do the right thing.
 
 <details><summary>
+
 ## Fragment parameters
+
 </summary>
 
 Although Tootpick currently only uses a single parameter, `text`, it is ready
