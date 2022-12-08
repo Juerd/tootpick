@@ -82,6 +82,7 @@ Tootpick tries to recover from that and do the right thing.
 
 ## Why not just link directly to Mastodon?
 
+</summary>
 Mastodon is part of the fediverse, a federated network. By design, there is no
 central server or central domain name. That direct link option you might be
 thinking about, does not exist. Please don't make the mistake of picking a
