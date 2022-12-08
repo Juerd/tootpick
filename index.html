@@ -262,10 +262,10 @@ GNU Affero General Public License for more details.
 
 	function setRecent(obj) {
 		// Deduplicate
-		let seen = {};
+		let seen = new Set();
 		obj = obj.filter(x => {
 			let key = x['domain'];
-			return seen[key] ? false : (seen[key] = true);
+			return seen.has(key) ? false : seen.add(key);
 		});
 
 		// The box will show 2, 3, or 4 per row, limit of 12 ensures
