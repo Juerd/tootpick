@@ -5,7 +5,7 @@ Tootpick is a privacy-preserving tooter.
 Its purpose is providing an easy link target for a "Mastodon share button",
 similar to other social media share buttons.
 
-[<img src="https://raw.githubusercontent.com/mastodon/mastodon/main/app/javascript/images/app-icon.svg" width=32> Share on Mastodon](https://tootpick.org/#text=Tootpick%20on%20GitHub%0AA%20privacy-preserving%20Mastodon%20share%20button%20link%20target%0A%0Ahttps://github.com/Juerd/tootpick) ← demo!
+[<img src="https://raw.githubusercontent.com/mastodon/mastodon/main/app/javascript/images/app-icon.svg" width=32> Share on Mastodon](https://tootpick.org/#text=%23tootpick%20is%20a%20privacy-preserving%20Mastodon%20share%20button%20link%20target%0A%0Ahttps://github.com/Juerd/tootpick) ← demo!
 
 ## Using Tootpick
 
