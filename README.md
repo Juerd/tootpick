@@ -108,7 +108,6 @@ Tootpick tries to recover from that and do the right thing.
 ## Fragment parameters
 
 </summary>
-
 Although Tootpick currently only uses a single parameter, `text`, it is ready
 for accepting more than that.
 
@@ -151,17 +150,22 @@ components, because it encodes space as `+` signs. There are several
 alternatives, but which one to use depends on your specific project's needs.
 For Android programs, use `Uri.encode()`.
 </details>
+<details><summary>
 
 ## Similar projects
 
+</summary>
 Tootpick is not the first of its kind. It draws inspiration from:
 
 - [toot](https://codeberg.org/kytta/toot)
 - [Advanced Sharer for Mastodon](https://sharetomastodon.github.io/about/)
 - [Mastodon Share Button](https://aly-ve.github.io/Mastodon-share-button/)
+</details>
+<details><summary>
 
 ## Future improvements
 
+</summary>
 At some point in the future, I hope to:
 
 - Have an alternative "light mode" for people who don't like dark pages.
@@ -169,3 +173,4 @@ At some point in the future, I hope to:
 - Supply a list of existing instances. Not sure if it's useful enough to add
   extra weight, and not sure how to determine which instances to include or
   exclude. Please let me know what you think!
+</details>
