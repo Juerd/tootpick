@@ -251,6 +251,7 @@ GNU Affero General Public License for more details.
 			catch (e) { }  // ignore URIError
 		}
 		message = args['text'] || "If you want a 'share with Mastodon' link on your website, have a look at Tootpick. https://tootpick.org/ #mastodon #tootpick";
+		if (args['plustospace'] == "yes") message = message.replace(/\+/g, " ");
 
 		$("#message").innerText = message;
 	}

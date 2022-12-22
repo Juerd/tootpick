@@ -154,10 +154,16 @@ document.location = 'https://tootpick.org/#text=' + encodeURIComponent(
 | Raku       | uri-escape() from URI::Escape        |
 | Ruby       | url\_encode() from ERB::Util         |
 
-Notably, Java's `java.net.URLEncoder` is useless for path and fragment
-components, because it encodes space as `+` signs. There are several
-alternatives, but which one to use depends on your specific project's needs.
-For Android programs, use `Uri.encode()`.
+Some environments don't provide a URI encoding function that can be used for
+fragments. For these, Tootpick provides a parameter `plustospace`, which when
+set to `yes`, will cause `+` signs to be changed to space characters, which
+would normally be wrong. It can be used like
+`https://tootpick.org/#plustospace=yes&text=Your+text+here`.
+
+| Language | Function that can be used with `plustospace=yes` |
+| -------- | ------------------------------------------------ |
+| Java     | java.net.URLEncoder.encode()                     |
+| Jekyll   | cgi\_escape()                                    |
 </details>
 <details><summary>
 
