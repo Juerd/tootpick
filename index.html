@@ -61,7 +61,7 @@ GNU Affero General Public License for more details.
 		text-decoration: underline;
 		cursor: pointer;
 	}
-	a:hover {
+	a:hover, summary:hover {
 		filter: brightness(150%);
 	}
 	main {
@@ -190,6 +190,9 @@ GNU Affero General Public License for more details.
 	}
 	footer details:not([open]) {
 		display: inline-block;
+	}
+	footer details:not([open])::before {
+		content: '\0000B7\000020';  /* MIDDLE DOT, SPACE */
 	}
 	footer summary {
 		display: inline-block;
@@ -486,6 +489,7 @@ GNU Affero General Public License for more details.
 	<a href="https://github.com/Juerd/tootpick">Tootpick</a> is a
 	privacy-preserving instance picker for sharing links from
 	news sites, blogs, etc.<br>
+	<a href="https://github.com/Juerd/tootpick">Add Tootpick to your website</a>
 	<details data-nosnippet>
 		<summary>Legal notices</summary>
 		<h4>License</h4>
